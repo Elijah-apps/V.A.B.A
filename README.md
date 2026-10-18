@@ -1,126 +1,564 @@
-Bible for Android
-=================
+ # ✝️ Bible+ — An Open-Source Bible Study & Spiritual Growth Platform
 
-**100% Free, Open-Source, Quick and Friendly Bible App.**
+**Created by Elijah Ekpen Mensah**
 
-Get the apps on Google Play: [Alkitab](https://play.google.com/store/apps/details?id=yuku.alkitab) (Indonesian version) or [Quick Bible](https://play.google.com/store/apps/details?id=yuku.alkitab.kjv) (non-Indonesian version).
+> A Bible for reading. A platform for understanding. A companion for spiritual growth.
 
-- [Official Website](https://alkitab.app)
-- [Developer Page](https://alkitab.app/developer) for creating your own Bible versions, song books, reading plans, and integrations
-- [Content and Integration Guides](docs/developer/README.md) for the developer documentation maintained in this repository
-- [Changelog](CHANGELOG.md)
-- [Development Blog](https://blog.alkitab.app)
-- [Discussion Group](https://groups.google.com/group/bibleforandroid)
+Bible+ is an open-source Bible application designed to make Scripture more accessible, understandable, searchable, and engaging. It combines Bible reading with contextual study tools, personal notes, memorization systems, reading plans, cross-references, and optional AI-powered study assistance.
 
-Alkitab is the Indonesian word for the Bible.
+Our mission is to build a community-driven Bible platform that helps people move beyond reading individual verses toward understanding Scripture in its broader context.
 
-Building
---------
+**Built for readers, students of Scripture, teachers, researchers, churches, and developers.**
 
-Requirements: JDK 21 (Zulu recommended) and the Android SDK, including the NDK, because the `Snappy` module contains native C++. The compile SDK, minimum SDK, and NDK versions are pinned in `gradle/libs.versions.toml`.
+---
 
-The main app module is `:Alkitab`. For local development, the supported open-source build is the `plain` flavor, which works out of the box: placeholder Bible data ships in `Alkitab/src/plain/assets/internal`, and a placeholder `Alkitab/google-services.json` is checked in (Firebase features will not actually function with it, but the build and the rest of the app do).
+## 📖 Table of Contents
 
-Build a debug APK:
+- [Vision](#-vision)
+- [Why Bible+?](#-why-bible)
+- [Core Features](#-core-features)
+- [Value-Added Features](#-value-added-features)
+- [AI-Powered Bible Study](#-ai-powered-bible-study)
+- [Technology Stack](#️-technology-stack)
+- [Getting Started](#-getting-started)
+- [Project Structure](#-project-structure)
+- [Roadmap](#️-roadmap)
+- [Open Source & Contributions](#-open-source--contributions)
+- [Bible Translation & Copyright](#-bible-translation--copyright)
+- [Privacy & Security](#-privacy--security)
+- [Author](#-author)
+- [License](#-license)
 
-    ./gradlew assemblePlainDebug
+---
 
-Build a debug App Bundle:
+## 🌟 Vision
 
-    ./gradlew bundlePlainDebug
+Bible+ aims to become a comprehensive, open-source ecosystem for reading, studying, teaching, and exploring the Bible.
 
-Run the unit tests used in CI:
+Rather than functioning solely as a digital copy of Scripture, the application is designed to connect Bible reading with practical tools for comprehension, reflection, research, and personal study.
 
-    ./gradlew testPlainDebugUnitTest testPlainReleaseUnitTest
+### Our principles
 
-The four product flavors are `plain` (open source), plus `yuku_alkitab`, `yuku_quick_bible`, and `sabda_alkitab` (the published apps). The production flavors need the proprietary Bible text and signing keys described under [Release builds](#release-builds) below.
+- **Scripture first:** Preserve the integrity of biblical texts.
+- **Accessible to everyone:** Make Bible study tools available across devices and communities.
+- **Open source:** Encourage transparency, collaboration, and community-led development.
+- **Context matters:** Help users examine verses within their chapters, books, historical settings, and related passages.
+- **Privacy by design:** Respect personal notes, reading history, and private study activity.
+- **Technology in service of understanding:** Use modern software and AI responsibly without presenting generated interpretations as unquestionable truth.
 
-Contributing
-------------
+---
 
-`develop` is the integration branch. Base your work on `develop` and target your pull request at `develop`, never at `master`. The repository follows git-flow: `master` only receives merges from `release/*` branches when a version ships.
+## 💡 Why Bible+?
 
-Every pull request against `develop` runs the unit tests and a `plainDebug` build. Pull requests from branches inside this repository also get signed release APKs for all production flavors, uploaded to a preview URL and linked in a comment on the pull request. Pull requests from forks skip that job, since it needs secrets that forks cannot read.
+Many Bible applications focus primarily on reading, searching, and listening. Bible+ seeks to bring additional study capabilities into one integrated experience.
 
-Before working on the codebase, read [AGENTS.md](AGENTS.md) for the architecture overview, module structure, ARI verse addressing, and code conventions.
+| Traditional Bible App | Bible+ Vision |
+|---|---|
+| Read individual verses | Explore verses within their literary context |
+| Search for keywords | Search Scripture by phrase, topic, reference, and related concepts |
+| Follow a reading plan | Track progress and build sustainable reading habits |
+| Save favorite verses | Organize verses into collections, notes, and study topics |
+| Read commentary separately | Connect passages with references and study resources |
+| Memorize verses manually | Use structured memorization and review tools |
+| Study independently | Support collaborative study and responsible AI-assisted exploration |
 
-Bible translations/versions
----------------------------
+*These comparisons describe the project's intended direction, not a claim that every feature has already been implemented.*
 
-This app natively uses *.yes* files for the Bible text. You can create a *.yes* file by preparing a plain text file (a *.yet* file). See the [YET authoring guide](docs/developer/yet.md) for instructions and [docs/binary-formats.md](docs/binary-formats.md) for the binary format specifications.
+---
 
-To add a version to the app, open it from the Versions screen. The app accepts *.yes* files directly, and converts PalmBible+ *.pdb* files to *.yes* with its built-in converter for your own use. Gzipped files (*.yes.gz*, *.pdb.gz*) are decompressed transparently.
+## 🚀 Core Features
 
-For converting in bulk or from another Bible format, see [docs/tools.md](docs/tools.md), which covers the desktop converters in `tools/` and where to get the prebuilt jars.
+### 📚 1. Bible Reader
 
-Customizing and Integrating
----------------------------
+- Navigate between biblical books, chapters, and verses.
+- Support multiple Bible translations where licensing permits.
+- Switch between reading layouts and themes.
+- Adjust font size, line spacing, and reading preferences.
+- Bookmark verses and passages.
+- Copy and share Scripture references.
+- Maintain reading progress.
 
-Bible for Android is not only open-source, but also designed in a flexible manner. You can:
+### 🔎 2. Advanced Scripture Search
 
-- Create and distribute your own Bible translation
-- Create and make publicly available your favorite Song Book
-- Create and publish a Reading Plan
-- Open specific verses from your app
+- Search for words, phrases, and exact references.
+- Filter results by Testament, book, or translation.
+- Browse search results with surrounding context.
+- Explore related verses and cross-references.
+- Save useful search results for future study.
 
-The inter-app API lives in the `AlkitabIntegration` module. See the [content and integration guides](docs/developer/README.md) for authoring formats and opening verses.
+### 📝 3. Personal Study Workspace
 
-Developer Documentation
------------------------
+- Create private notes linked to verses.
+- Highlight passages using customizable colors.
+- Organize notes into folders and study topics.
+- Build personal verse collections.
+- Record questions, observations, and reflections.
+- Export selected notes and study materials.
 
-Start with [AGENTS.md](AGENTS.md) (architecture overview, module structure, ARI encoding, code conventions, and build instructions), then the `docs/` folder:
+### 📅 4. Bible Reading Plans
 
-**Architecture & infrastructure**
-- [Architecture Deep Dive](docs/architecture.md) — singleton patterns, data flow, module dependencies
-- [Build System](docs/build-system.md) — flavors, signing, CI/CD, release process
-- [Google Play Publishing](docs/play-publishing.md) — store uploads via `tools/play/publish.py`
-- [Tools](docs/tools.md) — the desktop converters in `tools/` for Bible versions and reading plans
-- [Storage & Database](docs/storage.md) — SQLite schema, preferences, file storage
-- [Backend Communication](docs/backend-communication.md) — API endpoints, download flows
-- [Text Rendering](docs/text-rendering.md) — verse formatting pipeline and codes
-- [Binary Formats](docs/binary-formats.md) — YES2, Bintex, RPB file format specs
+- Create daily, weekly, and thematic reading plans.
+- Explore chronological and book-by-book reading schedules.
+- Track completed readings.
+- View reading streaks and progress.
+- Resume an interrupted plan at any time.
+- Create custom reading schedules.
 
-**Feature modules**
-- [Songs](docs/modules/songs.md) — song book browsing, search, audio playback
-- [Reading Plans](docs/modules/reading-plans.md) — RPB binary format, daily progress tracking
-- [Versions](docs/modules/versions.md) — Bible version management, download, YES2 format
-- [Markers](docs/modules/markers.md) — bookmarks, notes, highlights system
-- [Sync](docs/modules/sync.md) — cloud sync protocol and FCM push
-- [Devotions](docs/modules/devotions.md) — daily devotional articles
-- [Audio Playback](docs/modules/audio-playback.md) — ExoPlayer/MIDI controllers
-- [Search](docs/modules/search.md) — full-text verse search engine
-- [Daily Verse Widget](docs/modules/daily-verse-widget.md) — home screen widget
-- [Data Transfer](docs/modules/data-transfer.md) — JSON export/import of user data
+### 🧠 5. Scripture Memorization
 
-Design documents for in-flight features are under `docs/features/`.
+- Save verses for memorization.
+- Hide selected words and reconstruct the passage.
+- Practice verse recall using flashcards.
+- Review previously learned passages.
+- Schedule repetition sessions.
+- Track memorization progress.
 
-**Tech debt**
-- [Tech Debt Backlog](docs/tech-debt-remediation.md): open, partial, and completed REM records with problem descriptions, priorities, and next steps
+### 🔗 6. Cross-References & Topic Exploration
 
-Release builds
---------------
+- Discover passages connected by references.
+- Explore biblical themes such as faith, wisdom, forgiveness, hope, and justice.
+- Follow references between the Old and New Testaments.
+- Build topic-based verse collections.
+- Distinguish direct textual references from thematic associations.
 
-The [Releases](https://github.com/yukuku/androidbible/releases) page holds pre-release APKs built automatically from every push to `develop`. They are signed with the production key and installable, but they are development builds, not the stable versions on Google Play.
+### 🎧 7. Audio & Accessibility
 
-`versionName` comes from `version.properties` combined with a build stage: `dev` by default, `beta` with `-PversionStage=beta`, and `release` with `-PversionStage=release`. Never hardcode a version in `Alkitab/build.gradle.kts`.
+- Support compatible audio Bible resources.
+- Provide adjustable reading typography.
+- Offer keyboard-friendly navigation.
+- Design interfaces with accessibility in mind.
+- Support responsive layouts for desktop, tablet, and mobile devices.
 
-Release packaging is pure Gradle. Production flavors expect the signing env vars (`SIGN_KEYSTORE`, `SIGN_ALIAS`, `SIGN_PASSWORD`, plus `SIGN_SABDA_KEYSTORE`, `SIGN_SABDA_ALIAS`, `SIGN_SABDA_PASSWORD` for the `sabda_alkitab` flavor, which has its own upload key) and `ALKITAB_PROPRIETARY_DIR`, which must contain `overlay/<applicationId>/text_raw/` (Bible text) and `google-services.json` (real Firebase config covering every production applicationId). With those set, `./gradlew assembleYuku_alkitabRelease` (or any other production flavor) builds and signs the APK directly. Set `BUILD_DIST` to override the `dev` suffix in the output filename.
+Audio availability depends on the selected resource and its licensing terms.
 
-Translations are integrated with `integrate_translations.sh`.
+---
 
-License
---------
+## ✨ Value-Added Features
 
-    Copyright 2009-present The Alkitab App Authors.
+Bible+ is designed to go beyond basic reading functionality.
 
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
+### 🗺️ Biblical Timeline
 
-       http://www.apache.org/licenses/LICENSE-2.0
+Explore biblical events in chronological order using carefully sourced historical and scriptural references.
 
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
+Planned capabilities:
+
+- Timeline of major biblical events.
+- Connections between events and Scripture passages.
+- Historical context and explanatory notes.
+- Clear distinction between explicit biblical chronology and scholarly estimates.
+
+### 🌍 Bible Geography
+
+Explore locations mentioned in Scripture through maps and geographical references.
+
+Potential features include:
+
+- Biblical cities, regions, and landmarks.
+- Places connected to individual passages.
+- Journey and route exploration.
+- Historical and modern geographical comparisons where appropriate.
+
+### 📖 Biblical Dictionary & Glossary
+
+Create a searchable reference library for biblical terms, names, places, and concepts.
+
+- Definitions and explanations.
+- Related Scripture references.
+- Alternative spellings and transliterations.
+- Original-language information when supported by reliable sources.
+- Links to relevant study materials.
+
+### 🧩 Chapter & Book Summaries
+
+Provide concise study guides that help users understand the structure and major themes of biblical books.
+
+Each guide may include:
+
+- Historical background.
+- Literary structure.
+- Main themes.
+- Key passages.
+- Important people and locations.
+- Questions for reflection and discussion.
+
+Summaries should remain distinguishable from the biblical text itself.
+
+### 👥 Group Bible Study
+
+Support collaborative learning through optional group features.
+
+- Create study groups.
+- Share reading plans.
+- Prepare discussion questions.
+- Exchange study notes with selected participants.
+- Organize group study sessions.
+- Share public study collections.
+
+Group sharing should be opt-in, with clear privacy controls.
+
+### 📊 Personal Study Analytics
+
+Help users understand their study habits without turning spiritual growth into a competition.
+
+- Reading consistency.
+- Books and chapters explored.
+- Memorization progress.
+- Reading-plan completion.
+- Personal study milestones.
+
+Analytics should emphasize reflection and consistency rather than ranking people's spirituality.
+
+---
+
+## 🤖 AI-Powered Bible Study
+
+Bible+ may include an optional AI-assisted study companion to help users explore Scripture more effectively.
+
+### Planned capabilities
+
+- Explain a passage in accessible language.
+- Summarize a chapter while retaining important themes.
+- Generate discussion questions.
+- Compare interpretations from selected study resources.
+- Identify relevant cross-references.
+- Explain biblical terminology.
+- Help users develop structured study plans.
+- Generate quizzes and memorization exercises.
+- Answer questions using a retrieval-based collection of approved biblical and reference materials.
+
+### Responsible AI principles
+
+AI-generated content is a study aid, not Scripture itself.
+
+- Display the biblical passages supporting an answer.
+- Identify the translation and reference source when available.
+- Distinguish textual facts from interpretation and speculation.
+- Avoid inventing quotations or citations.
+- Acknowledge disagreements among reputable scholarly and theological traditions.
+- Allow users to read Scripture without using AI.
+- Avoid presenting generated answers as definitive divine instructions.
+
+AI features may require a separately configured provider and API key. The core application should remain useful without an AI integration.
+
+---
+
+## 🛠️ Technology Stack
+
+The final stack will depend on the implementation. One possible architecture is:
+
+| Layer | Suggested Technology |
+|---|---|
+| Frontend | HTML, Tailwind CSS, JavaScript |
+| Backend API | Python, Flask |
+| Database | SQLite for local development; PostgreSQL for larger deployments |
+| Search | SQLite full-text search or PostgreSQL full-text search |
+| Authentication | Optional account-based authentication |
+| AI integration | Provider-independent API adapter |
+| Testing | Pytest and frontend testing tools |
+| Version control | Git and GitHub |
+
+These technologies are proposed options, not a claim that they are already implemented.
+
+### Architectural goals
+
+- Modular and maintainable code.
+- Clear separation between biblical content and application logic.
+- API-driven access to study features.
+- Support for local-first or offline-capable reading where the chosen architecture permits.
+- Minimal dependencies.
+- Secure handling of user accounts and API credentials.
+
+---
+
+## ⚙️ Getting Started
+
+### Prerequisites
+
+For the proposed Flask implementation, install:
+
+- Python 3.10 or later.
+- Git.
+- pip.
+
+### 1. Clone the repository
+
+Replace `YOUR_USERNAME` and `YOUR_REPOSITORY` with your actual GitHub details.
+
+```bash
+git clone https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git
+cd YOUR_REPOSITORY
+```
+
+### 2. Create a virtual environment
+
+```bash
+python -m venv .venv
+```
+
+Activate it on Linux or macOS:
+
+```bash
+source .venv/bin/activate
+```
+
+Activate it on Windows:
+
+```powershell
+.venv\Scripts\activate
+```
+
+### 3. Install dependencies
+
+If the repository contains a `requirements.txt` file:
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Configure environment variables
+
+Create a local `.env` file if the application uses environment-based configuration.
+
+Example:
+
+```env
+FLASK_DEBUG=1
+SECRET_KEY=replace-with-a-secure-random-value
+DATABASE_URL=sqlite:///bible_plus.db
+
+# Optional AI integration
+AI_API_KEY=
+```
+
+Never commit real credentials or production secrets to GitHub. The application must load configuration using an appropriate configuration library or environment-variable mechanism.
+
+### 5. Run the application
+
+Once the Flask entry point has been implemented, start it using the command appropriate to the repository.
+
+For example, if the entry point is `app.py`:
+
+```bash
+flask --app app run --debug
+```
+
+Open the local address shown in your terminal.
+
+**Note:** These instructions describe the proposed setup. The repository must contain the corresponding application files, dependencies, configuration, and entry point before the commands will work.
+
+---
+
+## 📁 Project Structure
+
+A possible project structure is:
+
+```text
+bible-plus/
+├── app.py
+├── config.py
+├── requirements.txt
+├── .env.example
+├── .gitignore
+├── README.md
+│
+├── bible_app/
+│   ├── __init__.py
+│   ├── routes/
+│   │   ├── reader.py
+│   │   ├── search.py
+│   │   ├── notes.py
+│   │   └── reading_plans.py
+│   ├── services/
+│   │   ├── bible_service.py
+│   │   ├── search_service.py
+│   │   └── study_service.py
+│   ├── models/
+│   ├── templates/
+│   └── static/
+│
+├── tests/
+│   ├── test_reader.py
+│   └── test_search.py
+│
+└── docs/
+    ├── architecture.md
+    └── contributing.md
+```
+
+This is a suggested structure and can be adapted as the project develops.
+
+---
+
+## 🗺️ Roadmap
+
+The following roadmap describes potential development phases.
+
+### Phase 1 — Foundation
+
+- [ ] Set up the repository and project architecture.
+- [ ] Build the Bible reading interface.
+- [ ] Implement book, chapter, and verse navigation.
+- [ ] Integrate a legally usable Bible text source.
+- [ ] Add Scripture search.
+- [ ] Add bookmarks and personal notes.
+
+### Phase 2 — Study Tools
+
+- [ ] Implement cross-references.
+- [ ] Add reading plans.
+- [ ] Create verse memorization tools.
+- [ ] Build the biblical glossary.
+- [ ] Add chapter summaries and study guides.
+
+### Phase 3 — Advanced Learning
+
+- [ ] Develop a biblical timeline.
+- [ ] Add Bible geography.
+- [ ] Introduce topic exploration.
+- [ ] Add optional AI-assisted study.
+- [ ] Build quizzes and discussion questions.
+
+### Phase 4 — Community & Accessibility
+
+- [ ] Add optional collaborative study groups.
+- [ ] Improve mobile and offline capabilities.
+- [ ] Expand accessibility support.
+- [ ] Add translation and localization support.
+- [ ] Improve automated testing and documentation.
+
+Progress should be updated as features are actually implemented and tested.
+
+---
+
+## 🤝 Open Source & Contributions
+
+Bible+ is intended to be a community-driven project.
+
+Contributions from developers, designers, translators, biblical scholars, educators, and accessibility specialists are welcome.
+
+### How to contribute
+
+1. Fork the repository.
+2. Create a feature branch.
+3. Implement your improvement.
+4. Add or update relevant tests.
+5. Document any new functionality.
+6. Submit a pull request describing your changes.
+
+Example:
+
+```bash
+git checkout -b feature/scripture-search
+git add .
+git commit -m "Add scripture search"
+git push origin feature/scripture-search
+```
+
+Before contributing, please check the project's contribution guidelines and license.
+
+### Ways to contribute
+
+- Develop new features.
+- Improve the reading interface.
+- Fix bugs and improve performance.
+- Add tests and documentation.
+- Review biblical content sources.
+- Improve accessibility and localization.
+- Report issues and suggest enhancements.
+
+---
+
+## 📜 Bible Translation & Copyright
+
+Bible translations have different copyright and licensing conditions.
+
+Bible+ must only distribute, bundle, or display biblical texts in accordance with the applicable license and usage terms.
+
+Before integrating a translation:
+
+- Verify its license.
+- Review redistribution and attribution requirements.
+- Follow any limits on quotations or API usage.
+- Attribute translations and reference materials as required.
+- Avoid assuming that all Bible translations are in the public domain.
+
+The application should keep translation metadata separate from the underlying reader so additional permitted translations can be integrated responsibly.
+
+---
+
+## 🔐 Privacy & Security
+
+Bible+ aims to protect users' reading activity and personal study materials.
+
+Key principles include:
+
+- Collect only the information necessary for enabled features.
+- Keep private notes private by default.
+- Make sharing permissions explicit.
+- Protect credentials and authentication tokens.
+- Never expose AI API keys in frontend code.
+- Provide clear account and data-management policies when accounts are implemented.
+- Document any third-party services that process user data.
+
+The privacy model should evolve alongside the application's actual capabilities.
+
+---
+
+## 🧪 Quality & Testing
+
+Reliability is essential for an application intended for Scripture study.
+
+Planned quality practices include:
+
+- Unit tests for Bible navigation and search.
+- Validation of book, chapter, and verse references.
+- Integration tests for APIs and databases.
+- Tests for translation attribution and source metadata.
+- Accessibility checks.
+- Security reviews for authentication and user-generated content.
+- Regression tests for critical reading functionality.
+
+---
+
+## 📄 License
+
+The project's software license should be selected and added before public release.
+
+For example, the MIT License may suit a project intended to encourage broad reuse and modification, provided it matches the author's goals and dependencies' licenses.
+
+A software license does not automatically grant permission to redistribute copyrighted Bible translations, commentaries, audio recordings, or other third-party content.
+
+---
+
+## 👨‍💻 Author
+
+**Elijah Ekpen Mensah**
+
+Creator and maintainer of Bible+.
+
+Interested in open-source software, educational technology, knowledge systems, and using technology to make learning more accessible.
+
+- GitHub: [Elijah-apps](https://github.com/Elijah-apps)
+
+### Project Philosophy
+
+> Build tools that make knowledge easier to access, understanding easier to develop, and meaningful learning easier to sustain.
+
+---
+
+## ⭐ Support the Project
+
+If Bible+ aligns with your vision for accessible Bible study:
+
+- Star the repository.
+- Report bugs and suggest improvements.
+- Contribute code and documentation.
+- Share the project with Bible study groups and developers.
+- Help review content sources and accessibility.
+
+Every thoughtful contribution can help the project grow.
+
+**Bible+ — Read deeply. Study thoughtfully. Grow continually.**
+
+*An open-source project initiated by Elijah Ekpen Mensah.*
