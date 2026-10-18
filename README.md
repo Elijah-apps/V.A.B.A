@@ -1,4 +1,4 @@
- # ✝️ V.A.B.A   Bible+ — An Open-Source Bible Study & Spiritual Growth Platform
+ # ✝️ V.A.B.A  — An Open-Source Bible Study & Spiritual Growth Platform
 
 **Created by Elijah Ekpen Mensah**
 
